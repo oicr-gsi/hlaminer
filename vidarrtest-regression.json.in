@@ -30,6 +30,8 @@
           "hlaminer.runHlaMiner.pDesignationFile": "$HLAMINER_BWA_INDEX_ROOT/HLAminer_v1.4/database/hla_nom_p.txt",
           "hlaminer.runHlaMiner.hlaMiner": "$HLAMINER_ROOT/bin/HLAminer.pl",
           "hlaminer.runHlaMiner.modules": "hlaminer/1.4 hlaminer-bwa-index/0.7.17 samtools/1.9",
+          "hlaminer.runHlaMiner.jobMemory": 8,
+          "hlaminer.runHlaMiner.timeout": 20,
           "hlaminer.bwaMem.runBwaMem_modules": "samtools/1.9 hlaminer-bwa-index/0.7.17",
           "hlaminer.bwaMem.runBwaMem_bwaRef": "$HLAMINER_BWA_INDEX_ROOT/HLA-I_II_GEN.fasta",
           "hlaminer.bwaMem.readGroups": "'@RG\\tID:200124_A00469_0077_BHNGLTDSXX_GAGACGAT-TAACCGGT_2\\tLB:CRE_0002_Pb_R_PE_409_WG\\tPL:ILLUMINA\\tPU:200124_A00469_0077_BHNGLTDSXX_GAGACGAT-TAACCGGT_2\\tSM:CRE_0002_Pb_R'",
@@ -71,7 +73,7 @@
         },
         "id": "hlaminer_test",
         "metadata": {
-            "hlaminer.exportedClones": {
+            "hlaminer.resultFile": {
                 "contents": [
                     {
                         "outputDirectory": "@SCRATCH@/@DATE@_Workflow_hlaminer_hlaminer_test_@JENKINSID@"
@@ -79,15 +81,7 @@
                 ],
                 "type": "ALL"
             },
-            "hlaminer.alignmentReport": {
-                "contents": [
-                    {
-                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_hlaminer_hlaminer_test_@JENKINSID@"
-                    }
-                ],
-                "type": "ALL"
-            },
-            "hlaminer.rescuedReport": {
+            "hlaminer.logFile": {
                 "contents": [
                     {
                         "outputDirectory": "@SCRATCH@/@DATE@_Workflow_hlaminer_hlaminer_test_@JENKINSID@"
