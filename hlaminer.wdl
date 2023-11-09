@@ -1,7 +1,5 @@
 version 1.0
 
-import "imports/pull_bwaMem.wdl" as bwaMem
-
 # ================================================================================
 # Workflow accepts two fastq files for paired-end sequencing, with R1 and R2 reads
 # ================================================================================
@@ -75,11 +73,11 @@ input {
 command <<<
  set -euo pipefail
 
- bwa aln -e 0 -o 0 ~{hlaFasta} ~{inputFastq1} > aln_test.1.sai
- bwa aln -e 0 -o 0 ~{hlaFasta} ~{inputFastq2} > aln_test.2.sai
- bwa sampe -o 1000 ~{hlaFasta} aln_test.1.sai aln_test.2.sai ~{inputFastq1} ~{inputFastq2} > aln.sam
+ bwa aln -e 0 -o 0 ~{hlaFasta} ~{inputFastq1} > "aln_test.1.sai"
+ bwa aln -e 0 -o 0 ~{hlaFasta} ~{inputFastq2} > "aln_test.2.sai"
+ bwa sampe -o 1000 ~{hlaFasta} "aln_test.1.sai" "aln_test.2.sai" ~{inputFastq1} ~{inputFastq2} > "aln.sam"
  
- ~{hlaMiner} -a aln.sam -h ~{hlaFasta} -p ~{pDesignationFile} -l ~{outputFileNamePrefix}
+ ~{hlaMiner} -a "aln.sam" -h ~{hlaFasta} -p ~{pDesignationFile} -l ~{outputFileNamePrefix}
 >>>
 
 parameter_meta {
