@@ -29,7 +29,7 @@
           "hlaminer.outputFileNamePrefix": "TESTING",
           "hlaminer.runHlaMiner.pDesignationFile": "$HLAMINER_BWA_INDEX_ROOT/HLAminer_v1.4/database/hla_nom_p.txt",
           "hlaminer.runHlaMiner.hlaMiner": "$HLAMINER_ROOT/bin/HLAminer.pl",
-          "hlaminer.runHlaMiner.modules": "hlaminer/1.4 hlaminer-bwa-index/0.7.17 samtools/1.9",
+          "hlaminer.runHlaMiner.modules": "hlaminer/1.4 hlaminer-bwa-index/0.7.17 samtools/1.9 bwa/0.7.17",
           "hlaminer.runHlaMiner.jobMemory": 8,
           "hlaminer.runHlaMiner.timeout": 20,
           "hlaminer.bwaMem.runBwaMem_modules": "samtools/1.9 hlaminer-bwa-index/0.7.17",
