@@ -9,21 +9,13 @@ workflow hlaminer {
 input {
   File fastqR1 
   File fastqR2
-  String outputFileNamePrefix = ""
-}
-
-String sampleID = if outputFileNamePrefix=="" then basename(fastqR1, ".fastq.gz") else outputFileNamePrefix
-
-call bwaMem.bwaMem {
-  input:
-    fastqR1 = fastqR1,
-    fastqR2 = fastqR2,
-    outputFileNamePrefix = sampleID
+  String outputFileNamePrefix
 }
 
 call runHlaMiner {
   input:
-    inputBam = bwaMem.bwaMemBam,
+    inputFastq1 = fastqR1,
+    inputFastq2 = fastqR2,
     outputFileNamePrefix = outputFileNamePrefix
 }
 
@@ -71,7 +63,8 @@ task runHlaMiner {
 input {
   Int  jobMemory = 8
   Int  timeout   = 20
-  File inputBam
+  File inputFastq1
+  File inputFastq2
   String hlaMiner = "$HLAMINER_ROOT/bin/HLAminer.pl"
   String hlaFasta = "$HLAMINER_BWA_INDEX_ROOT/HLA-I_II_GEN.fasta"
   String pDesignationFile = "$HLAMINER_BWA_INDEX_ROOT/HLAminer_v1.4/database/hla_nom_p.txt"
@@ -81,11 +74,17 @@ input {
 
 command <<<
  set -euo pipefail
- samtools view -h ~{inputBam} | ~{hlaMiner} -a stream -h ~{hlaFasta} -p ~{pDesignationFile} -l ~{outputFileNamePrefix}
+
+ bwa aln -e 0 -o 0 ~{hlaFasta} ~{inputFastq1} > aln_test.1.sai
+ bwa aln -e 0 -o 0 ~{hlaFasta} ~{inputFastq2} > aln_test.2.sai
+ bwa sampe -o 1000 ~{hlaFasta} aln_test.1.sai aln_test.2.sai ~{inputFastq1} ~{inputFastq2} > aln.sam
+ 
+ ~{hlaMiner} -a aln.sam -h ~{hlaFasta} -p ~{pDesignationFile} -l ~{outputFileNamePrefix}
 >>>
 
 parameter_meta {
- inputBam: "Input BWA bam file"
+ inputFastq1: "Input fastq with first mate reads"
+ inputFastq2: "Input fastq with second mate reads"
  hlaMiner: "Path to the HLAminer.pl script"
  hlaFasta: "Path to the reference fasta file"
  pDesignationFile: "P-designation file, contains details of all HLA Sequences having the same antigen binding domains"
