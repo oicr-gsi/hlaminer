@@ -69,7 +69,7 @@ input {
   String hlaFasta = "$HLAMINER_BWA_INDEX_ROOT/HLA-I_II_GEN.fasta"
   String pDesignationFile = "$HLAMINER_BWA_INDEX_ROOT/HLAminer_v1.4/database/hla_nom_p.txt"
   String outputFileNamePrefix
-  String modules = "hlaminer/1.4 hlaminer-bwa-index/0.7.17 samtools/1.9"
+  String modules = "hlaminer/1.4 hlaminer-bwa-index/0.7.17 samtools/1.9 bwa/0.7.17"
 }
 
 command <<<
