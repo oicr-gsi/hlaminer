@@ -3,7 +3,10 @@ This section lists command(s) run by the hlaminer workflow
 
 * Running hlaminer
 
-=== Generate alignments and run hlaminer ===.
+hlaminer wraps HLAminer () tool in a cromwell workflow. HLAminer is used to profile the usage of HLA alleles in a sample. The tool works with sequence data of many types (ie. whole genome, whole transcriptome/RNA-Seq, exome), at the group and allele resolution. It supports predictions from a variety of DNA sequencing technologies including those from Illumina, MGI, PacBio and Oxford Nanopore.
+
+The workflow takes fastq files as it's inputs and aligns using HLA-specific indexes using BWA (it is ran as a subworkflow).
+Below we have the command used to run HLAminer:
 
 ```
  set -euo pipefail
