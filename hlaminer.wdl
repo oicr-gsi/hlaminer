@@ -35,10 +35,6 @@ meta {
       {
         name: "bwa/0.7.12",
         url: "https://github.com/lh3/bwa/archive/0.7.12.tar.gz"
-      },
-      {
-        name: "samtools/1.9",
-        url: "https://github.com/samtools/samtools/archive/0.1.19.tar.gz"
       }
     ]
     output_meta: {
@@ -67,7 +63,7 @@ input {
   String hlaFasta = "$HLAMINER_BWA_INDEX_ROOT/HLA-I_II_GEN.fasta"
   String pDesignationFile = "$HLAMINER_BWA_INDEX_ROOT/HLAminer_v1.4/database/hla_nom_p.txt"
   String outputFileNamePrefix
-  String modules = "hlaminer/1.4 hlaminer-bwa-index/0.7.17 samtools/1.9 bwa/0.7.17"
+  String modules = "hlaminer/1.4 hlaminer-bwa-index/0.7.17 bwa/0.7.17"
 }
 
 command <<<
