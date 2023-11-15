@@ -8,4 +8,4 @@ cd $1
 echo ".csv file:"
 for c in *csv;do md5sum $c;done 
 echo ".log file:"
-for l in *log;do md5sum $l;done
+find . -name "*.log" | xargs awk '/Gene,HLA Supertype\/Group/{flag=1} flag' | md5sum

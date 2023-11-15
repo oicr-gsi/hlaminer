@@ -1,7 +1,5 @@
 version 1.0
 
-import "imports/pull_bwaMem.wdl" as bwaMem
-
 # ================================================================================
 # Workflow accepts two fastq files for paired-end sequencing, with R1 and R2 reads
 # ================================================================================
@@ -9,21 +7,13 @@ workflow hlaminer {
 input {
   File fastqR1 
   File fastqR2
-  String outputFileNamePrefix = ""
-}
-
-String sampleID = if outputFileNamePrefix=="" then basename(fastqR1, ".fastq.gz") else outputFileNamePrefix
-
-call bwaMem.bwaMem {
-  input:
-    fastqR1 = fastqR1,
-    fastqR2 = fastqR2,
-    outputFileNamePrefix = sampleID
+  String outputFileNamePrefix
 }
 
 call runHlaMiner {
   input:
-    inputBam = bwaMem.bwaMemBam,
+    inputFastq1 = fastqR1,
+    inputFastq2 = fastqR2,
     outputFileNamePrefix = outputFileNamePrefix
 }
 
@@ -43,12 +33,8 @@ meta {
         url: "https://github.com/bcgsc/HLAminer/releases/download/v1.4/HLAminer_1-4.tar.gz"
       },
       {
-        name: "bwa/0.7.12",
-        url: "https://github.com/lh3/bwa/archive/0.7.12.tar.gz"
-      },
-      {
-        name: "samtools/1.9",
-        url: "https://github.com/samtools/samtools/archive/0.1.19.tar.gz"
+        name: "bwa/0.7.17",
+        url: "https://github.com/lh3/bwa/releases/download/v0.7.17/bwa-0.7.17.tar.bz2"
       }
     ]
     output_meta: {
@@ -71,21 +57,28 @@ task runHlaMiner {
 input {
   Int  jobMemory = 8
   Int  timeout   = 20
-  File inputBam
+  File inputFastq1
+  File inputFastq2
   String hlaMiner = "$HLAMINER_ROOT/bin/HLAminer.pl"
   String hlaFasta = "$HLAMINER_BWA_INDEX_ROOT/HLA-I_II_GEN.fasta"
   String pDesignationFile = "$HLAMINER_BWA_INDEX_ROOT/HLAminer_v1.4/database/hla_nom_p.txt"
   String outputFileNamePrefix
-  String modules = "hlaminer/1.4 hlaminer-bwa-index/0.7.17 samtools/1.9"
+  String modules = "hlaminer/1.4 hlaminer-bwa-index/0.7.17 bwa/0.7.17"
 }
 
 command <<<
  set -euo pipefail
- samtools view -h ~{inputBam} | ~{hlaMiner} -a stream -h ~{hlaFasta} -p ~{pDesignationFile} -l ~{outputFileNamePrefix}
+
+ bwa aln -e 0 -o 0 ~{hlaFasta} ~{inputFastq1} > "aln_test.1.sai"
+ bwa aln -e 0 -o 0 ~{hlaFasta} ~{inputFastq2} > "aln_test.2.sai"
+ bwa sampe -o 1000 ~{hlaFasta} "aln_test.1.sai" "aln_test.2.sai" ~{inputFastq1} ~{inputFastq2} > "aln.sam"
+ 
+ ~{hlaMiner} -a "aln.sam" -h ~{hlaFasta} -p ~{pDesignationFile} -l ~{outputFileNamePrefix}
 >>>
 
 parameter_meta {
- inputBam: "Input BWA bam file"
+ inputFastq1: "Input fastq with first mate reads"
+ inputFastq2: "Input fastq with second mate reads"
  hlaMiner: "Path to the HLAminer.pl script"
  hlaFasta: "Path to the reference fasta file"
  pDesignationFile: "P-designation file, contains details of all HLA Sequences having the same antigen binding domains"
