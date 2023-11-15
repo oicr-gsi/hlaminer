@@ -33,8 +33,8 @@ meta {
         url: "https://github.com/bcgsc/HLAminer/releases/download/v1.4/HLAminer_1-4.tar.gz"
       },
       {
-        name: "bwa/0.7.12",
-        url: "https://github.com/lh3/bwa/archive/0.7.12.tar.gz"
+        name: "bwa/0.7.17",
+        url: "https://github.com/lh3/bwa/releases/download/v0.7.17/bwa-0.7.17.tar.bz2"
       }
     ]
     output_meta: {
