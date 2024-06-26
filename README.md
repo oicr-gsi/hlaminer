@@ -40,23 +40,23 @@ Parameter|Value|Default|Description
 
 ### Outputs
 
-Output | Type | Description
----|---|---
-`resultFile`|File|Reporting alignment metrics
-`logFile`|File|Log file with run info from HLAminer
+Output | Type | Description | Labels
+---|---|---|---
+`resultFile`|File|Reporting alignment metrics|vidarr_label: resultFile
+`logFile`|File|Log file with run info from HLAminer|vidarr_label: logFile
 
 
 ## Commands
- This section lists command(s) run by the hlaminer workflow
+This section lists command(s) run by the hlaminer workflow
  
- * Running hlaminer
+* Running hlaminer
  
- hlaminer wraps HLAminer () tool in a cromwell workflow. HLAminer is used to profile the usage of HLA alleles in a sample. The tool works with sequence data of many types (ie. whole genome, whole transcriptome/RNA-Seq, exome), at the group and allele resolution. It supports predictions from a variety of DNA sequencing technologies including those from Illumina, MGI, PacBio and Oxford Nanopore.
+hlaminer wraps HLAminer () tool in a cromwell workflow. HLAminer is used to profile the usage of HLA alleles in a sample. The tool works with sequence data of many types (ie. whole genome, whole transcriptome/RNA-Seq, exome), at the group and allele resolution. It supports predictions from a variety of DNA sequencing technologies including those from Illumina, MGI, PacBio and Oxford Nanopore.
 
- The workflow takes fastq files as it's inputs and aligns using HLA-specific indexes using BWA (it is ran as a subworkflow).
- Below we have the command used to run HLAminer:
+The workflow takes fastq files as it's inputs and aligns using HLA-specific indexes using BWA (it is ran as a subworkflow).
+Below we have the command used to run HLAminer:
  
- ```
+```
   set -euo pipefail
  
   bwa aln -e 0 -o 0 HLA_FASTA FASTQ1 > "ALIGNMENT1_SAI"
@@ -64,8 +64,8 @@ Output | Type | Description
   bwa sampe -o 1000 HLA_FASTA "ALIGNEMNT1_SAI" "ALIGNMENT2_SAI" FASTQ1 FASTQ2 > "ALIGNMENT_SAM"
   
   HLAMINER -a "ALIGNMENT_SAM" -h HLA_FASTA -p P_DESIGNATION_FILE -l OUTPUT_PREFIX
- ```
- ## Support
+```
+## Support
 
 For support, please file an issue on the [Github project](https://github.com/oicr-gsi) or send an email to gsi@oicr.on.ca .
 
