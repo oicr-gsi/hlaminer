@@ -38,9 +38,15 @@ meta {
       }
     ]
     output_meta: {
-      resultFile: "Reporting alignment metrics",
-      logFile: "Log file with run info from HLAminer"
+    resultFile: {
+        description: "Reporting alignment metrics",
+        vidarr_label: "resultFile"
+    },
+    logFile: {
+        description: "Log file with run info from HLAminer",
+        vidarr_label: "logFile"
     }
+}
 }
 
 output {
