@@ -3,7 +3,7 @@
       "arguments": {
           "hlaminer.fastqR1": {
               "contents": {
-                  "configuration": "/.mounts/labs/gsi/testdata/hlaminer/input_data/SWID_15949654_CRE_0002_Pb_R_PE_409_WG_200124_A00469_0077_BHNGLTDSXX_GAGACGAT-TAACCGGT_L002_001.annotated.subset_R1.fastq.gz",
+                  "configuration": "/.mounts/labs/gsi/testdata/hlaminer/test_inputs/Test01.annotated.subset_R1.fastq.gz",
                   "externalIds": [
                       {
                           "id": "TEST",
@@ -15,7 +15,7 @@
           },
           "hlaminer.fastqR2": {
               "contents": {
-                  "configuration": "/.mounts/labs/gsi/testdata/hlaminer/input_data/SWID_15949654_CRE_0002_Pb_R_PE_409_WG_200124_A00469_0077_BHNGLTDSXX_GAGACGAT-TAACCGGT_L002_001.annotated.subset_R2.fastq.gz",
+                  "configuration": "/.mounts/labs/gsi/testdata/hlaminer/test_inputs/Test01.annotated.subset_R2.fastq.gz",
                   "externalIds": [
                       {
                           "id": "TEST",
@@ -61,7 +61,7 @@
             {
                 "metrics_calculate": "@CHECKOUT@/tests/calculate.sh",
                 "metrics_compare": "@CHECKOUT@/tests/compare.sh",
-                "output_metrics": "/.mounts/labs/gsi/testdata/hlaminer/output_metrics/hlaminer_test2.metrics",
+                "output_metrics": "/.mounts/labs/gsi/testdata/hlaminer/output_metrics/workflow_test_01.metrics",
                 "type": "script"
             }
         ]
